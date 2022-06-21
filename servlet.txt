@@ -1,0 +1,57 @@
+import java.io.IOException;
+import java.io.PrintWriter;
+import javax.servlet.http.*;
+
+public class Temperature extends HttpServlet{
+public void service(HttpServletRequest request,HttpServletResponse response) throws IOException{
+    String button = request.getParameter("button");
+    int temp = Integer.parseInt(request.getParameter("temp"));
+        if ("button1".equals(button)) {
+            int result = 9/5 * temp + 32;
+            PrintWriter output = response.getWriter();
+            output.println("Temperature in Fahrenheit: "+result);
+        } else if ("button2".equals(button)) {
+            int result = (temp - 32) * 5/9;
+            
+            PrintWriter output = response.getWriter();
+            output.println("Temperature in Celsius: "+result);
+        } else {
+            // ???
+        }
+
+    }
+}
+
+
+
+web.xml
+
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+    <servlet>
+        <servlet-name>Temp</servlet-name>
+        <servlet-class>Temperature</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Temp</servlet-name>
+        <url-pattern>/add_me</url-pattern>
+    </servlet-mapping>
+</web-app>
+
+index.html
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Temperature Conversion</title>
+</head>
+<body>
+<form action="add_me">
+    <input type="text" name="temp"/>
+    <button type="submit" name="button" value="button1">Cel to Fah</button>
+    <button type="submit" name="button" value="button2">Fah to Cel</button>
+</form>
+</body>
+</html>
+
